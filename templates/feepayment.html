@@ -1,0 +1,41 @@
+<!-- manage_payments.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Payments</title>
+</head>
+<body>
+    <h1>Manage Payments for {{ student.first_name }} {{ student.last_name }}</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="fee_category">Fee Category</label>
+        <select id = "fee_category" name="fee_category" required>
+            {% for category in fee_categories %}
+            <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+        </select>
+        <br>
+
+        <label for="status">Status</label>
+        <select id ="status" name="status" required>
+            <option value="Due">Due</option>
+            <option value="Paid">Paid</option>
+        </select>
+        <br>
+
+        <label for="amount_paid">Amount Paid</label>
+        <input id = "amount_paid" type="number" name="amount_paid" required>
+        <br>
+
+        <label for="paid_date">Paid Date</label>
+        <input id ="paid_date" type="date" name="paid_date">
+        <br>
+
+        <button type="submit">Update Payment</button>
+    </form>
+</body>
+</html>
+</body>
+</html>

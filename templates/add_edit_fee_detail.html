@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% if fee_status %}Edit{% else %}Add{% endif %} Fee Detail</title>
+    <link rel="stylesheet" href="{% static 'css/home.css'%}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<div id="div1" class="row container-fluid;">
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top" style="">
+        <div class="col-sm-3" style="text-indent: 80px;font-size:x-large;font-weight: bolder;color:blue;">FEEPOINT</div>
+        <div class="col-sm-1" style="margin-top: 4px;margin-left: 500px;"><a href="{% url 'home' %}" style="color:blue;font-weight: bold;">Home</a></div>
+        <div class="col-sm-1" style="margin-top: 4px;"><a href="#" style="color:blue;font-weight: bold;">About</a></div>
+        <div class="col-sm-1" style="margin-top: 4px;margin-right: 8px;"><a href="{% url 'logout' %}" style="color:blue;font-weight: bold;">Logout</a></div>
+    </nav>
+</div>
+<div class="container mt-5 pt-5">
+    <h1>{% if fee_status %}Edit{% else %}Add{% endif %} Fee Detail</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="student">Student</label>
+            <select name="student" id="student" class="form-control">
+                {% for student in students %}
+                    <option value="{{ student.id }}" {% if fee_status and fee_status.student.id == student.id %}selected{% endif %}>
+                        {{ student.first_name }} {{ student.last_name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="fee_category">Fee Category</label>
+            <select name="fee_category" id="fee_category" class="form-control">
+                {% for category in fee_categories %}
+                    <option value="Monthly" {% if fee_status and fee_status.fee_category.id == 'monthly' %}selected{% endif %}>
+                        Monthly
+                    </option>
+                 <option value="Yearly" {% if fee_status and fee_status.fee_category.id == 'yearly' %}selected{% endif %}>
+                        Yearly
+                    </option>
+                <option value="One-Time" {% if fee_status and fee_status.fee_category.id == 'onetime' %}selected{% endif %}>
+                        One-Time
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="status">Status</label>
+            <select name="status" id="status" class="form-control">
+                <option value="Paid" {% if fee_status and fee_status.status == 'Paid' %}selected{% endif %}>Paid</option>
+                <option value="Due" {% if fee_status and fee_status.status == 'Due' %}selected{% endif %}>Due</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="due_date">Due Date</label>
+            <input type="date" name="due_date" id="due_date" class="form-control" value="{% if fee_status %}{{ fee_status.due_date|date:'Y-m-d' }}{% else %}{{ '' }}{% endif %}">
+        </div>
+        <div class="form-group">
+            <label for="paid_date">Paid Date</label>
+            <input type="date" name="paid_date" id="paid_date" class="form-control" value="{% if fee_status %}{{ fee_status.paid_date|date:'Y-m-d' }}{% else %}{{ '' }}{% endif %}">
+        </div>
+        <div class="form-group">
+            <label for="amount_paid">Amount Paid</label>
+            <input type="number" name="amount_paid" id="amount_paid" class="form-control" value="{% if fee_status %}{{ fee_status.amount_paid }}{% else %}{{ '' }}{% endif %}">
+        </div>
+        <button type="submit" class="btn btn-primary">{% if fee_status %}Update{% else %}Add{% endif %} Fee Detail</button>
+    </form>
+</div>
+</body>
+</html>

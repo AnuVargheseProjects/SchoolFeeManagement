@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <style>
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+}
+
+.container {
+    background: white;
+    padding: 2em;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+h2 {
+    text-align: center;
+}
+
+.form-container {
+    margin: 10px 0;
+}
+
+.hidden {
+    display: none;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #5cb85c;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+
+button:hover {
+    background-color: #4cae4c;
+}
+
+
+</style>
+
+</head>
+<body>
+<form method="POST">
+ <div id="registration-form" class="form-container ">
+      {% csrf_token %}
+            <h2>Register</h2>
+            <form onsubmit="return register()">
+
+                <input type="text" id="reg-username" placeholder="Username" required name="uname">
+                <input type="password" id="reg-password" placeholder="Password" required name="upass">
+                <input type="password" id="reg-confirm-password" placeholder="Confirm Password" required>
+
+                <button type="submit">Register</button>
+            </form>
+            <p>Already have an account? <a href="#" onclick="toggleForms()">Login here</a></p>
+        </div>
+</form>
+
+
+
+</body>
+</html>
